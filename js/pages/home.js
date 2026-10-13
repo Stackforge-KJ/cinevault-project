@@ -1,7 +1,7 @@
 import { genres, getTrending, getMovie } from "../tmdb.js";
 import { library } from "../library.js";
 import { showWelcome } from "../welcome.js";
-import { cardHTML, renderHeader } from "../ui.js";
+import { cardHTML, renderHeader, skeletonCards } from "../ui.js";
 
 renderHeader("Home");
 showWelcome();
@@ -42,7 +42,8 @@ hero.addEventListener("click", (e) => {
   clearInterval(timer);
 });
 
-trending.innerHTML = `<p class="msg">Loading movies...</p>`;
+hero.innerHTML = `<div class="hero-body" aria-hidden="true"><div class="sk sk-title"></div><div class="sk sk-line"></div><div class="sk sk-line short"></div></div>`;
+trending.innerHTML = skeletonCards(8);
 try {
   movies = await getTrending();
   heroMovies = movies.filter((m) => m.backdrop || m.c1).slice(0, 4);

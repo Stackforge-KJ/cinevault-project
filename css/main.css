@@ -94,3 +94,16 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .welcome .hint{margin-bottom:2rem;max-width:36ch}
 .welcome .btn{padding:.8rem 2rem;font-size:1.05rem}
 @media (prefers-reduced-motion:no-preference){.welcome h2{animation:pop .6s ease-out}@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}}
+
+/* loading placeholders + image fade-in */
+.sk{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.2s linear infinite;border-radius:var(--radius-sm)}
+.poster.sk,.player.sk{box-shadow:none;border-radius:var(--radius)}
+.sk-line{height:12px;margin-top:.5rem}
+.sk-line.short{width:60%}
+.sk-title{height:2.5rem;width:min(70%,420px);margin-bottom:1rem}
+.player.sk{width:100%}
+@keyframes shimmer{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+.poster span{z-index:0}
+.poster img{z-index:1;opacity:0;transition:opacity .3s}
+.poster img.loaded{opacity:1}

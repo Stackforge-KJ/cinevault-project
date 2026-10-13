@@ -1,6 +1,6 @@
 import { renderHeader } from "../ui.js";
 import { configured } from "../firebase.js";
-import { login, googleLogin, resetPassword, friendly, watchUser } from "../auth.js";
+import { login, googleLogin, resetPassword, friendly, watchUser, finishRedirect } from "../auth.js";
 
 renderHeader("");
 const form = document.getElementById("form");
@@ -12,7 +12,10 @@ const dest = /^[\w-]+\.html(\?[\w=&%-]*)?$/.test(next) ? next : "index.html";
 const go = () => (location.href = dest);
 
 if (!configured) err.textContent = "Firebase is not set up yet. Paste your config into js/firebase-config.js.";
-else watchUser((u) => u && go());
+else {
+  try { await finishRedirect(); } catch (e) { console.error(e); err.textContent = friendly(e); }
+  watchUser((u) => u && go());
+}
 
 async function run(task) {
   err.textContent = "";

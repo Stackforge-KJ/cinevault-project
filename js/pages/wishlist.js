@@ -1,4 +1,4 @@
-import { renderHeader, cardHTML } from "../ui.js";
+import { renderHeader, cardHTML, skeletonCards } from "../ui.js";
 import { configured } from "../firebase.js";
 import { requireAuth } from "../auth.js";
 import { getWishlist, removeFromWishlist } from "../store.js";
@@ -13,6 +13,7 @@ if (!configured) {
   const empty = `<p class="empty">Your list is empty. <a href="movies.html" style="color:var(--accent)">Browse movies</a> and tap "Add to wishlist".</p>`;
   main.innerHTML = `<h1 class="page-title">My list</h1><p class="hint">Movies you have saved for later.</p><div class="grid" id="grid" style="margin-top:1.5rem"></div>`;
   const grid = document.getElementById("grid");
+  grid.innerHTML = skeletonCards(6);
   try {
     const list = await getWishlist(user.uid);
     grid.innerHTML = list.length

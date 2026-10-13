@@ -1,5 +1,5 @@
 import { genres, getCatalogue, tvGenres, getTvCatalogue } from "../tmdb.js";
-import { cardHTML, renderHeader } from "../ui.js";
+import { cardHTML, renderHeader, skeletonCards } from "../ui.js";
 
 const isTv = document.body.dataset.type === "tv";
 const genreList = isTv ? tvGenres : genres;
@@ -17,7 +17,7 @@ function drawFilters() {
 }
 async function drawGrid() {
   const id = ++run; // ignore slow responses that arrive out of order
-  grid.innerHTML = `<p class="msg">Loading...</p>`;
+  grid.innerHTML = skeletonCards(12);
   try {
     const list = await load({ genre, q: q.value.trim(), sort: sort.value });
     if (id !== run) return;

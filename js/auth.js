@@ -1,7 +1,7 @@
 import { auth, db } from "./firebase.js";
 import { cloudinary } from "./firebase-config.js";
 import {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider,
   signOut, onAuthStateChanged, updateProfile, sendPasswordResetEmail,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
@@ -48,9 +48,27 @@ export async function signUp({ username, email, password, photo }) {
 
 export const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
+// Phones and Safari block pop-ups, so Google sign-in uses a full-page redirect there.
+const ua = navigator.userAgent;
+const useRedirect = /iPhone|iPad|iPod|Android|Mobile/i.test(ua) || (/safari/i.test(ua) && !/chrome|crios|fxios|android/i.test(ua));
+
 export async function googleLogin() {
-  const { user } = await signInWithPopup(auth, new GoogleAuthProvider());
+  const provider = new GoogleAuthProvider();
+  if (useRedirect) {
+    await signInWithRedirect(auth, provider);
+    return new Promise(() => {}); // the page is leaving, so never continue
+  }
+  const { user } = await signInWithPopup(auth, provider);
   await ensureUserDoc(user, user.displayName || user.email.split("@")[0], user.photoURL || "");
+}
+
+// Run on the login and signup pages: finishes a Google sign-in that came back from a redirect.
+export async function finishRedirect() {
+  const result = await getRedirectResult(auth);
+  if (!result) return false;
+  const { user } = result;
+  await ensureUserDoc(user, user.displayName || user.email.split("@")[0], user.photoURL || "");
+  return true;
 }
 
 export const resetPassword = (email) => sendPasswordResetEmail(auth, email);
@@ -61,7 +79,17 @@ export function watchUser(cb) {
   return onAuthStateChanged(auth, async (u) => {
     if (!u) return cb(null);
     let d = {};
-    try { const s = await getDoc(doc(db, "users", u.uid)); if (s.exists()) d = s.data(); } catch (e) { console.warn(e); }
+    try {
+      const ref = doc(db, "users", u.uid);
+      let s = await getDoc(ref);
+      // Older accounts that never got a profile record get one now (skipped for brand-new signups, which create their own).
+      const isNew = Date.now() - Date.parse(u.metadata.creationTime) < 15000;
+      if (!s.exists() && !isNew) {
+        await ensureUserDoc(u, u.displayName || u.email.split("@")[0], u.photoURL || "");
+        s = await getDoc(ref);
+      }
+      if (s.exists()) d = s.data();
+    } catch (e) { console.warn(e); }
     cb({
       uid: u.uid,
       email: u.email,
@@ -92,7 +120,10 @@ export async function updateAccount(user, { username, photo }) {
     if (!cloudinary.cloudName) throw Object.assign(new Error("uploads off"), { code: "app/no-uploads" });
     photoURL = await uploadAvatar(photo);
   }
-  await updateDoc(doc(db, "users", user.uid), { username, photoURL });
+  // The profile record normally exists already; create it if an older account is missing one.
+  const ref = doc(db, "users", user.uid);
+  if ((await getDoc(ref)).exists()) await updateDoc(ref, { username, photoURL });
+  else await setDoc(ref, { username, email: user.email, photoURL, role: "user", subscriptionStatus: "none", createdAt: serverTimestamp() });
   await updateProfile(auth.currentUser, { displayName: username, photoURL: photoURL || null });
   return { ...user, username, photoURL };
 }

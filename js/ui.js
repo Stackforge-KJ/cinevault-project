@@ -1,7 +1,7 @@
 export const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 export const posterHTML = (m) =>
-  `<div class="poster" style="--c1:${m.c1 || "#1a2033"};--c2:${m.c2 || "#0a0d16"}">${m.poster ? `<img src="${m.poster}" alt="" loading="lazy">` : `<span>${m.title}</span>`}</div>`;
+  `<div class="poster" style="--c1:${m.c1 || "#1a2033"};--c2:${m.c2 || "#0a0d16"}"><span>${m.title}</span>${m.poster ? `<img src="${m.poster}" alt="" loading="lazy" decoding="async" onload="this.classList.add('loaded')">` : ""}</div>`;
 
 export const cardHTML = (m) =>
   `<a class="card" href="movie.html?id=${m.id}${m.type === "tv" ? "&type=tv" : ""}">${posterHTML(m)}
@@ -46,3 +46,7 @@ export function renderHeader(active = "Home") {
     .then(([{ configured }, { watchUser }]) => (configured ? watchUser(drawAuthSlot) : drawAuthSlot(null)))
     .catch((e) => { console.warn(e); drawAuthSlot(null); });
 }
+
+// Shimmering placeholder cards shown while data is loading
+export const skeletonCards = (n = 8) =>
+  Array.from({ length: n }, () => `<div class="card" aria-hidden="true"><div class="poster sk"></div><div class="sk sk-line" style="margin-top:.5rem"></div><div class="sk sk-line short"></div></div>`).join("");

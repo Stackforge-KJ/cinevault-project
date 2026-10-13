@@ -7,7 +7,7 @@ import { inWishlist, toggleWishlist, getPlaylists, createPlaylist, addToPlaylist
 renderHeader("Movies");
 const main = document.getElementById("main");
 const initials = (n) => n.split(" ").map((p) => p[0]).slice(0, 2).join("");
-main.innerHTML = `<p class="msg">Loading...</p>`;
+main.innerHTML = `<section class="detail" aria-hidden="true"><div class="poster sk"></div><div><div class="sk sk-title"></div><div class="sk sk-line"></div><div class="sk sk-line"></div><div class="sk sk-line short"></div></div></section>`;
 
 try {
   const qs = new URLSearchParams(location.search);

@@ -6,7 +6,7 @@ import { library } from "../library.js";
 
 renderHeader("Movies");
 const main = document.getElementById("main");
-main.innerHTML = `<p class="msg">Loading...</p>`;
+main.innerHTML = `<div class="player-layout" aria-hidden="true"><div><div class="player sk"></div><div class="sk sk-title" style="margin-top:1rem"></div><div class="sk sk-line"></div></div><div></div></div>`;
 
 try {
   const qs = new URLSearchParams(location.search);
