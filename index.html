@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CineVault: stream and download movies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header class="site-header wrap" id="site-header"></header>
+
+  <main>
+    <section class="hero wrap" id="hero" aria-label="Featured movies"></section>
+
+    <section class="section wrap">
+      <div class="section-head"><h2>Trending now</h2><a href="movies.html">View all</a></div>
+      <div class="row" id="trending"></div>
+    </section>
+
+    <section class="section wrap">
+      <div class="section-head"><h2>Browse by genre</h2></div>
+      <div class="chips" id="genres"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap">CineVault &bull; Stream and download</footer>
+  <script type="module" src="js/pages/home.js"></script>
+</body>
+</html>

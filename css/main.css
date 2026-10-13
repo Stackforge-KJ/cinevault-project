@@ -1,0 +1,96 @@
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{scroll-padding-top:var(--header-h)}
+body{background:var(--bg);color:var(--text);font:400 var(--fs-base)/1.5 var(--font);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{padding-inline:var(--page-pad)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.25rem;border-radius:var(--radius-sm);font-weight:600;transition:background .15s}
+.btn-primary{background:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-ghost{border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-sm{padding:.4rem .9rem;font-size:var(--fs-sm)}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;height:var(--header-h);display:flex;align-items:center;gap:2rem;background:rgba(10,13,22,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-size:1.4rem;font-weight:700;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.nav{display:flex;gap:1.5rem;color:var(--muted)}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--text)}
+.search{margin-left:auto;flex:0 1 340px}
+.search input{width:100%;padding:.5rem 1rem;border-radius:var(--radius-sm);border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit}
+.search input::placeholder{color:var(--muted)}
+.auth-slot{display:flex;gap:.5rem;align-items:center}
+
+/* poster placeholder (replaced by TMDB images later) */
+.poster{position:relative;aspect-ratio:2/3;border-radius:var(--radius);overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));display:flex;align-items:flex-end;padding:.75rem;font-weight:700;line-height:1.1;box-shadow:inset 0 -60px 50px -30px rgba(0,0,0,.7)}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poster span{position:relative}
+
+/* hero */
+.hero{position:relative;min-height:clamp(380px,62vh,560px);display:flex;align-items:flex-end;padding-block:3rem;background:linear-gradient(120deg,var(--c1),var(--c2));isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--bg) 5%,transparent 70%),linear-gradient(0deg,var(--bg),transparent 40%)}
+.hero-body{max-width:520px}
+.hero h1{font-size:var(--fs-hero);font-weight:700;line-height:1;letter-spacing:-.03em;margin-bottom:.75rem}
+.meta{display:flex;flex-wrap:wrap;gap:.75rem;color:var(--muted);font-size:var(--fs-sm);margin-bottom:.75rem}
+.hero p{color:#c9cfdf;margin-bottom:1.25rem;max-width:46ch}
+.hero-actions{display:flex;gap:.75rem}
+.hero-nav{position:absolute;right:var(--page-pad);bottom:1.5rem;display:flex;gap:.5rem;align-items:center}
+.dot{width:8px;height:8px;border-radius:99px;background:#ffffff40}
+.dot[aria-current="true"]{width:24px;background:var(--accent)}
+.arrow{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.45);border:1px solid var(--line)}
+
+/* rows */
+.section{padding-block:2rem 0}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem}
+.section-head h2{font-size:var(--fs-lg);font-weight:600}
+.section-head a{color:var(--muted);font-size:var(--fs-sm)}
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(130px,14vw,180px);gap:1rem;overflow-x:auto;padding-bottom:.75rem;scroll-snap-type:x proximity}
+.card{scroll-snap-align:start}
+.card:hover .poster{outline:2px solid var(--accent)}
+.card-title{margin-top:.5rem;font-size:var(--fs-sm);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-sub{color:var(--muted);font-size:var(--fs-sm)}
+
+/* genres */
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.75rem}
+.chip{padding:.9rem 1rem;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line);font-weight:500}
+.chip:hover{border-color:var(--accent)}
+
+/* footer */
+.site-footer{margin-top:4rem;padding-block:2rem;border-top:1px solid var(--line);color:var(--muted);font-size:var(--fs-sm)}
+
+@media (max-width:760px){
+  .nav,.search{display:none}
+  .auth-slot{margin-left:auto}
+  .hero-nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.hero{background-size:cover;background-position:center top}
+.msg{color:var(--muted);padding:2rem 0}
+
+/* account menu */
+.user-menu{position:relative}
+.user-menu summary{list-style:none;cursor:pointer;display:block}
+.user-menu summary::-webkit-details-marker{display:none}
+.avatar-sm{width:36px;height:36px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);display:grid;place-items:center;font-size:var(--fs-sm);font-weight:600;overflow:hidden}
+.avatar-sm img{width:100%;height:100%;object-fit:cover}
+.menu{position:absolute;right:0;top:calc(100% + .5rem);min-width:180px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.5rem;display:grid;gap:.15rem;z-index:30}
+.menu a,.menu button{padding:.5rem .75rem;border-radius:var(--radius-sm);text-align:left}
+.menu a:hover,.menu button:hover{background:var(--surface-2)}
+.menu-name{padding:.5rem .75rem;font-weight:600;border-bottom:1px solid var(--line);margin-bottom:.25rem}
+
+/* welcome popup (full screen) */
+.welcome{position:fixed;inset:0;width:100vw;height:100vh;max-width:none;max-height:none;margin:0;padding:2rem;border:0;border-radius:0;color:var(--text);text-align:center;background:radial-gradient(circle at 50% 35%,#2a0f1d 0%,var(--bg) 70%);overflow:hidden}
+.welcome[open]{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.welcome canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.welcome>*:not(canvas){position:relative}
+.welcome-emoji{font-size:clamp(3rem,10vw,5rem);margin-bottom:1rem}
+.welcome h2{font-size:clamp(2.25rem,8vw,4.5rem);line-height:1.05;letter-spacing:-.03em}
+.welcome h2 span{color:var(--accent)}
+.welcome-by{color:#ffd166;font-weight:600;font-size:clamp(1rem,3vw,1.5rem);margin:.75rem 0 1rem}
+.welcome .hint{margin-bottom:2rem;max-width:36ch}
+.welcome .btn{padding:.8rem 2rem;font-size:1.05rem}
+@media (prefers-reduced-motion:no-preference){.welcome h2{animation:pop .6s ease-out}@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}}

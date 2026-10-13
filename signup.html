@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign up | CineVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header class="site-header wrap" id="site-header"></header>
+  <main class="auth-page">
+    <form class="auth-card" id="form" novalidate>
+      <h1>Create your account</h1>
+      <p class="sub">Join CineVault and start exploring.</p>
+      <div class="fg"><label for="username">Username</label>
+        <input id="username" name="username" required minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" autocomplete="username" placeholder="MovieLover24">
+        <small>3 to 20 letters, numbers or underscores.</small></div>
+      <div class="fg"><label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+      <div class="fg"><label for="password">Password</label>
+        <input id="password" name="password" type="password" required minlength="6" autocomplete="new-password" placeholder="At least 6 characters"></div>
+      <div class="fg"><label for="confirm">Confirm password</label>
+        <input id="confirm" name="confirm" type="password" required autocomplete="new-password"></div>
+      <div class="fg"><label for="photo">Profile picture (optional)</label>
+        <input id="photo" name="photo" type="file" accept="image/*"><small>JPG or PNG, up to 2 MB.</small></div>
+      <p class="error" id="error" role="alert"></p>
+      <button class="btn btn-primary btn-block" id="submit" type="submit">Create account</button>
+      <div class="divider">or</div>
+      <button class="btn btn-ghost btn-block" id="google" type="button">Continue with Google</button>
+      <p class="auth-foot">Already have an account? <a href="login.html">Log in</a></p>
+    </form></main>
+  <script type="module" src="js/pages/signup.js"></script>
+</body>
+</html>

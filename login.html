@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in | CineVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header class="site-header wrap" id="site-header"></header>
+  <main class="auth-page">
+    <form class="auth-card" id="form" novalidate>
+      <h1>Welcome back</h1>
+      <p class="sub">Log in to continue your movie journey.</p>
+      <div class="fg"><label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+      <div class="fg"><label for="password">Password</label>
+        <input id="password" name="password" type="password" required autocomplete="current-password"></div>
+      <div class="row-between"><button class="link-btn" id="forgot" type="button">Forgot password?</button></div>
+      <p class="error" id="error" role="alert"></p>
+      <button class="btn btn-primary btn-block" id="submit" type="submit">Log in</button>
+      <div class="divider">or</div>
+      <button class="btn btn-ghost btn-block" id="google" type="button">Continue with Google</button>
+      <p class="auth-foot">New here? <a href="signup.html">Create an account</a></p>
+    </form></main>
+  <script type="module" src="js/pages/login.js"></script>
+</body>
+</html>

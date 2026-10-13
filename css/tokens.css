@@ -1,0 +1,21 @@
+:root {
+  --bg: #0a0d16;
+  --surface: #121726;
+  --surface-2: #1a2033;
+  --line: #242b42;
+  --text: #f3f5fa;
+  --muted: #8d96ad;
+  --accent: #ff1f4b;
+  --accent-hover: #e0173f;
+
+  --font: "Outfit", system-ui, sans-serif;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-lg: 1.25rem;
+  --fs-hero: clamp(2.25rem, 6vw, 4rem);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --page-pad: clamp(1rem, 4vw, 3rem);
+  --header-h: 64px;
+}
